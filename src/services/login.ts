@@ -6,7 +6,7 @@ interface Params {
 }
 
 export function login(params: Params) {
-  return request(`https://www.piduoduo.xyz/api/login/admin`, {
+  return request(`/api/login/admin`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

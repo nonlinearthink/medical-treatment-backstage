@@ -1,14 +1,14 @@
 import { useSelector } from '@/.umi/plugin-dva/exports';
 import React from 'react';
-import { AdminModelState, Loading, connect, ConnectRC } from 'umi';
+import { AdminModelState, Loading, connect, ConnectRC, history } from 'umi';
 
 interface PageProps {
   admin: AdminModelState;
   loading: boolean;
 }
 
-const WelcomePage: ConnectRC<PageProps> = () => {
-  return <div></div>;
+const WelcomePage: ConnectRC<PageProps> = ({ admin }) => {
+  return <div>ok</div>;
 };
 
 export default connect(

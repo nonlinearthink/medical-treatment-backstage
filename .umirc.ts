@@ -16,9 +16,15 @@ export default defineConfig({
     {
       path: '/',
       component: '@/pages/index',
+      wrappers: ['@/wrappers/LoginWrapper'],
       routes: [
         { path: '/welcome', component: '@/pages/WelcomePage', exact: true },
-        { path: '/root', component: '@/pages/RootPage', exact: true },
+        {
+          path: '/root',
+          component: '@/pages/RootPage',
+          exact: true,
+          wrappers: ['@/wrappers/SuperAdminWrapper'],
+        },
         { path: '/drug', component: '@/pages/DrugPage', exact: true },
       ],
     },

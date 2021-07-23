@@ -1,5 +1,6 @@
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import { RequestConfig, history } from 'umi';
 
 const persistConfig = {
   // redux持久化配置
@@ -21,13 +22,33 @@ const persistEnhancer =
 
 export const dva = {
   config: {
-    onError(err) {
-      err.preventDefault();
-      console.error(err.message);
-    },
     extraEnhancers: [persistEnhancer()],
   },
 };
 
-// window.onload = () => persistStore(window.g_app._store);
-// console.log(window.g_app);
+export const request: RequestConfig = {
+  prefix: 'https://www.piduoduo.xyz',
+  requestInterceptors: [
+    (url, options) => {
+      return {
+        url,
+        options: {
+          ...options,
+          headers: {
+            token: '',
+          },
+        },
+      };
+    },
+  ],
+  responseInterceptors: [
+    async (response, options) => {
+      const { status } = response;
+      if (status == 401) {
+        history.replace('/login');
+      }
+      return response;
+    },
+  ],
+  errorHandler: () => {},
+};

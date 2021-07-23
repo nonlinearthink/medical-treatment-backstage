@@ -4,6 +4,7 @@ import styles from './index.less';
 import { history, AdminModelState, ConnectRC, Loading, connect } from 'umi';
 import ProForm, { ProFormText } from '@ant-design/pro-form';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { message } from 'antd';
 
 interface PageProps {
   admin: AdminModelState;
@@ -11,6 +12,7 @@ interface PageProps {
 }
 
 const LoginPage: ConnectRC<PageProps> = ({ admin, dispatch }) => {
+  const [loading, setLoading] = React.useState(false);
   return (
     <div className={styles.container}>
       <div className={styles.content}>
@@ -20,11 +22,19 @@ const LoginPage: ConnectRC<PageProps> = ({ admin, dispatch }) => {
         </div>
         <ProForm
           onFinish={async (values) => {
+            setLoading(true);
             dispatch({
               type: 'admin/login',
               payload: values,
-            }).then(() => {
-              history.push('/welcome');
+              onSuccess: () => {
+                history.push('/welcome');
+                message.success('登录成功');
+                setLoading(false);
+              },
+              onError: () => {
+                message.error('账号或密码错误');
+                setLoading(false);
+              },
             });
           }}
           submitter={{
@@ -35,6 +45,7 @@ const LoginPage: ConnectRC<PageProps> = ({ admin, dispatch }) => {
               style: {
                 width: '100%',
               },
+              loading: loading,
             },
           }}
           style={{ width: 300 }}

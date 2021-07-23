@@ -32,12 +32,11 @@ const authModel: AdminModelType = {
     },
   },
   effects: {
-    *login({ payload = {} }, { call, put }) {
+    *login({ payload = {}, onSuccess, onError }, { call, put }) {
       try {
         const res = yield call(loginService.login, payload);
-        // console.log('登录请求返回数据: ');
-        // console.log(res);
-        message.success('登录成功');
+        console.log('登录请求返回数据: ');
+        console.log(res);
         yield put({
           type: 'save',
           payload: {
@@ -47,8 +46,9 @@ const authModel: AdminModelType = {
             adminType: res.adminType,
           },
         });
-      } catch (e) {
-        // message.warning(e.message);
+        onSuccess(res);
+      } catch (err) {
+        onError(err);
       }
     },
   },
