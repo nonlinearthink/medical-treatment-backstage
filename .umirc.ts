@@ -1,9 +1,7 @@
 import { defineConfig } from 'umi';
 
 export default defineConfig({
-  antd: {
-    dark: true,
-  },
+  antd: {},
   base: '/admin/',
   dynamicImport: {},
   dva: {

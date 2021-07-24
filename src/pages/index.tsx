@@ -2,7 +2,7 @@ import ProLayout, { PageContainer } from '@ant-design/pro-layout';
 import IconFont from '@/components/iconfont';
 import { DashboardOutlined, UserOutlined } from '@ant-design/icons';
 import { Link, AdminModelState, ConnectRC, connect, history } from 'umi';
-import { Drawer, Button, message } from 'antd';
+import { Drawer, Button, message, Badge } from 'antd';
 import React from 'react';
 import styles from './index.less';
 import Profile from '@/components/Profile';
@@ -62,9 +62,9 @@ const IndexPage: ConnectRC<PageProps> = (props) => {
           label="网络状态:"
           content={
             navigator.onLine ? (
-              <div style={{ color: '#15da15' }}>在线</div>
+              <Badge status="processing" text="在线" color="green" />
             ) : (
-              <div style={{ color: '#da1515' }}>离线</div>
+              <Badge status="processing" text="离线" color="red" />
             )
           }
         />
