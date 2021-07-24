@@ -1,6 +1,6 @@
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { RequestConfig, history } from 'umi';
+import { RequestConfig, history, getDvaApp } from 'umi';
 
 const persistConfig = {
   // redux持久化配置
@@ -30,12 +30,13 @@ export const request: RequestConfig = {
   prefix: 'https://www.piduoduo.xyz',
   requestInterceptors: [
     (url, options) => {
+      let store = getDvaApp()._store.getState();
       return {
         url,
         options: {
           ...options,
           headers: {
-            token: '',
+            token: store.admin.isLogin ? store.admin.token : '',
           },
         },
       };

@@ -1,16 +1,18 @@
 import { request } from 'umi';
 
-interface Params {
-  adminId: string;
-  password: string;
+interface Props {
+  params: {
+    adminId: string;
+    password: string;
+  };
 }
 
-export function login(params: Params) {
+export function login(props: Props) {
   return request(`/api/login/admin`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    params,
+    params: props.params,
   });
 }

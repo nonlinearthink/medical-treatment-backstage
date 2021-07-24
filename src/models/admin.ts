@@ -1,6 +1,5 @@
-import { Reducer, Effect, history } from 'umi';
+import { Reducer, Effect } from 'umi';
 import * as loginService from '@/services/login';
-import { message } from 'antd';
 
 export interface AdminModelState {
   token: string;
@@ -42,7 +41,7 @@ const authModel: AdminModelType = {
   effects: {
     *login({ payload = {}, onSuccess, onError }, { call, put }) {
       try {
-        const res = yield call(loginService.login, payload);
+        const res = yield call(loginService.login, { params: payload });
         console.log('登录请求返回数据: ');
         console.log(res);
         yield put({
