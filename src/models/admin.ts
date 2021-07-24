@@ -17,12 +17,20 @@ export interface AdminModelType {
   };
   effects: {
     login: Effect;
+    logout: Effect;
   };
 }
 
+const initState: AdminModelState = {
+  token: '',
+  isLogin: false,
+  adminId: '',
+  adminType: '2',
+};
+
 const authModel: AdminModelType = {
   namespace: 'admin',
-  state: { token: '', isLogin: false, adminId: '', adminType: '2' },
+  state: initState,
   reducers: {
     save(state, action) {
       return {
@@ -50,6 +58,13 @@ const authModel: AdminModelType = {
       } catch (err) {
         onError(err);
       }
+    },
+    *logout({ onSuccess }, { put }) {
+      yield put({
+        type: 'save',
+        payload: initState,
+      });
+      onSuccess();
     },
   },
 };

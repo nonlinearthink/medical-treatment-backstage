@@ -3,7 +3,7 @@
 import { SVGAttributes, FunctionComponent } from 'react';
 
 interface Props extends Omit<SVGAttributes<SVGElement>, 'color'> {
-  name: 'AdminRoles' | 'yiliaoxiaofeixinxichaxun';
+  name: 'yonghu' | 'yiliaoxiaofeixinxichaxun';
   size?: number;
   color?: string | string[];
 }

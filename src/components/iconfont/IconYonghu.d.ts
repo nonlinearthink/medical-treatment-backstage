@@ -7,6 +7,6 @@ interface Props extends Omit<SVGAttributes<SVGElement>, 'color'> {
   color?: string | string[];
 }
 
-declare const IconAdminRoles: FunctionComponent<Props>;
+declare const IconYonghu: FunctionComponent<Props>;
 
-export default IconAdminRoles;
+export default IconYonghu;

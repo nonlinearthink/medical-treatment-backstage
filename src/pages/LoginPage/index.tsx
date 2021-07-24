@@ -1,14 +1,13 @@
 import IconFont from '@/components/iconfont';
 import React from 'react';
 import styles from './index.less';
-import { history, AdminModelState, ConnectRC, Loading, connect } from 'umi';
+import { history, AdminModelState, ConnectRC, connect } from 'umi';
 import ProForm, { ProFormText } from '@ant-design/pro-form';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { message } from 'antd';
 
 interface PageProps {
   admin: AdminModelState;
-  loading: boolean;
 }
 
 const LoginPage: ConnectRC<PageProps> = ({ admin, dispatch }) => {
@@ -88,9 +87,6 @@ const LoginPage: ConnectRC<PageProps> = ({ admin, dispatch }) => {
   );
 };
 
-export default connect(
-  ({ admin, loading }: { admin: AdminModelState; loading: Loading }) => ({
-    admin,
-    loading: loading.models.admin,
-  }),
-)(LoginPage);
+export default connect(({ admin }: { admin: AdminModelState }) => ({
+  admin,
+}))(LoginPage);
