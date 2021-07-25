@@ -5,6 +5,7 @@ import {
   UserOutlined,
   DeploymentUnitOutlined,
   HighlightOutlined,
+  UnorderedListOutlined,
 } from '@ant-design/icons';
 import { Link, UserModelState, ConnectRC, connect, history } from 'umi';
 import { Drawer, Button, message, Badge, Modal, Form, Input } from 'antd';
@@ -40,6 +41,11 @@ const IndexPage: ConnectRC<PageProps> = (props) => {
           path: '/admin/diagnosis',
           name: '诊断管理',
           icon: <HighlightOutlined />,
+        },
+        {
+          path: '/admin/drug',
+          name: '药品管理',
+          icon: <UnorderedListOutlined />,
         },
       ]}
       menuItemRender={(item, dom) => {
