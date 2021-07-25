@@ -7,10 +7,15 @@ import {
   resetPassword,
   updateAdmin,
 } from '@/services/admin';
-import { Modal, Button, Input, Form, message, Drawer } from 'antd';
+import { Button, message } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import moment from 'moment';
-import ProForm, { ProFormText, ProFormSelect } from '@ant-design/pro-form';
+import {
+  ProFormText,
+  ProFormSelect,
+  ModalForm,
+  DrawerForm,
+} from '@ant-design/pro-form';
 
 interface AdminItem {
   adminId: string;
@@ -21,10 +26,8 @@ interface AdminItem {
 const AdminPage = () => {
   const [resetPasswordVisable, setResetPasswordVisable] = React.useState(false);
   const [editingKey, setEditingKey] = React.useState('');
-  const [password, setPassword] = React.useState('123456');
 
   const [adminFormVisable, setAdminFormVisable] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
 
   const ref = React.useRef<ActionType>();
 
@@ -101,106 +104,94 @@ const AdminPage = () => {
           },
         }}
       />
-      <Modal
+      <ModalForm<{ password: string }>
         title="密码重置"
         visible={resetPasswordVisable}
-        onOk={() => {
-          setResetPasswordVisable(false);
-          resetPassword({ adminId: editingKey, params: { password } }).then(
-            (_) => {
-              message.success('更新密码成功');
-              setPassword('123456');
+        onVisibleChange={setResetPasswordVisable}
+        onFinish={async (values) => {
+          resetPassword({
+            adminId: editingKey,
+            params: { password: values.password },
+          }).then((_) => {
+            message.success('更新密码成功');
+            setResetPasswordVisable(false);
+          });
+        }}
+      >
+        <ProFormText.Password
+          label="密码"
+          placeholder="请输入密码"
+          name="password"
+          fieldProps={{
+            size: 'large',
+          }}
+          rules={[
+            {
+              required: true,
+              message: '请输入机构名称!',
+              validateTrigger: 'onSubmit',
             },
-          );
-        }}
-        onCancel={() => {
-          setResetPasswordVisable(false);
-          setPassword('123456');
-        }}
-        okButtonProps={{ disabled: password == '' }}
-      >
-        <Form.Item label="密码">
-          <Input
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-          />
-        </Form.Item>
-      </Modal>
-      <Drawer
+          ]}
+        />
+      </ModalForm>
+      <DrawerForm<{ adminId: string; password: string; adminType: string }>
         title="管理员信息"
-        placement="right"
-        closable={false}
-        onClose={() => setAdminFormVisable(false)}
         visible={adminFormVisable}
-        width={'30%'}
+        onVisibleChange={setAdminFormVisable}
+        onFinish={async (values) => {
+          createAdmin(values).then((res) => {
+            message.success('创建成功');
+            setAdminFormVisable(false);
+            ref.current?.reload();
+          });
+        }}
       >
-        <ProForm<{ adminId: string; password: string; adminType: string }>
-          onFinish={async (values) => {
-            setLoading(true);
-            createAdmin(values)
-              .then((res) => {
-                message.success('创建成功');
-                setLoading(false);
-                setAdminFormVisable(false);
-                ref.current?.reload();
-              })
-              .catch((_) => setLoading(false));
+        <ProFormText
+          label="管理员ID"
+          placeholder="请输入管理员ID"
+          name="adminId"
+          fieldProps={{
+            size: 'large',
           }}
-          onReset={() => setAdminFormVisable(false)}
-          submitter={{
-            searchConfig: { submitText: '创建', resetText: '取消' },
-            submitButtonProps: { loading: loading },
+          rules={[
+            {
+              required: true,
+              message: '请输入账号!',
+              validateTrigger: 'onSubmit',
+            },
+          ]}
+        />
+        <ProFormText.Password
+          label="管理员密码"
+          placeholder="请输入管理员密码"
+          name="password"
+          fieldProps={{
+            size: 'large',
           }}
-        >
-          <ProFormText
-            label="管理员ID"
-            placeholder="请输入管理员ID"
-            name="adminId"
-            fieldProps={{
-              size: 'large',
-            }}
-            rules={[
-              {
-                required: true,
-                message: '请输入账号!',
-                validateTrigger: 'onSubmit',
-              },
-            ]}
-          />
-          <ProFormText.Password
-            label="管理员密码"
-            placeholder="请输入管理员密码"
-            name="password"
-            fieldProps={{
-              size: 'large',
-            }}
-            rules={[
-              {
-                required: true,
-                message: '请输入密码!',
-                validateTrigger: 'onSubmit',
-              },
-            ]}
-          />
-          <ProFormSelect
-            label="管理员类型"
-            name="adminType"
-            options={[
-              { value: '1', label: '超级管理员' },
-              { value: '2', label: '管理员' },
-            ]}
-            rules={[
-              {
-                required: true,
-                message: '请选择用户类型密码!',
-                validateTrigger: 'onSubmit',
-              },
-            ]}
-          />
-        </ProForm>
-      </Drawer>
+          rules={[
+            {
+              required: true,
+              message: '请输入密码!',
+              validateTrigger: 'onSubmit',
+            },
+          ]}
+        />
+        <ProFormSelect
+          label="管理员类型"
+          name="adminType"
+          options={[
+            { value: '1', label: '超级管理员' },
+            { value: '2', label: '管理员' },
+          ]}
+          rules={[
+            {
+              required: true,
+              message: '请选择用户类型密码!',
+              validateTrigger: 'onSubmit',
+            },
+          ]}
+        />
+      </DrawerForm>
     </div>
   );
 };

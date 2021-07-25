@@ -46,9 +46,7 @@ const DeptPage: React.FC = (props: any) => {
         metas={{
           title: { dataIndex: 'deptName', title: '机构名' },
           avatar: {
-            render: (text, row) => (
-              <IconFont name="S_anyiyuanguahao" size={30} />
-            ),
+            render: (text, row) => <IconFont name="yiyuan" size={30} />,
           },
           content: {
             dataIndex: 'creatorId',
