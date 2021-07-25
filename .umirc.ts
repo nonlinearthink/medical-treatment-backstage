@@ -35,6 +35,7 @@ export default defineConfig({
           exact: true,
           name: '科室',
         },
+        { path: '/diagnosis', component: '@/pages/DiagnosisPage', exact: true },
         { path: '/drug', component: '@/pages/DrugPage', exact: true },
       ],
     },

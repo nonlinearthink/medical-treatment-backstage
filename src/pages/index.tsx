@@ -4,6 +4,7 @@ import {
   DashboardOutlined,
   UserOutlined,
   DeploymentUnitOutlined,
+  HighlightOutlined,
 } from '@ant-design/icons';
 import { Link, UserModelState, ConnectRC, connect, history } from 'umi';
 import { Drawer, Button, message, Badge, Modal, Form, Input } from 'antd';
@@ -35,6 +36,11 @@ const IndexPage: ConnectRC<PageProps> = (props) => {
           name: '机构与科室管理',
           icon: <DeploymentUnitOutlined />,
         },
+        {
+          path: '/admin/diagnosis',
+          name: '诊断管理',
+          icon: <HighlightOutlined />,
+        },
       ]}
       menuItemRender={(item, dom) => {
         let path = item.path?.replace('/admin', '');
@@ -51,7 +57,7 @@ const IndexPage: ConnectRC<PageProps> = (props) => {
         </div>
       )}
       siderWidth={220}
-      style={{ height: '100vh' }}
+      style={{ height: '100%', minHeight: '100vh' }}
     >
       <PageContainer
         header={{

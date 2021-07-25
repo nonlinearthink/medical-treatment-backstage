@@ -39,7 +39,7 @@ const DeptPage: React.FC = (props: any) => {
         headerTitle="科室列表"
         grid={{ gutter: 16, column: 2 }}
         pagination={{
-          pageSize: 10,
+          pageSize: 12,
         }}
         request={getDeptList}
         options={{ density: false, fullScreen: true, setting: false }}

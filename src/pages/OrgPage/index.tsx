@@ -21,7 +21,7 @@ const OrgPage = () => {
         headerTitle="机构列表"
         grid={{ gutter: 16, column: 2 }}
         pagination={{
-          pageSize: 10,
+          pageSize: 12,
         }}
         request={getOrgList}
         options={{ density: false, fullScreen: true, setting: false }}

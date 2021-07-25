@@ -23,7 +23,7 @@ interface AdminItem {
   createTime: Date;
 }
 
-const AdminPage = () => {
+const RootPage = () => {
   const [resetPasswordVisable, setResetPasswordVisable] = React.useState(false);
   const [editingKey, setEditingKey] = React.useState('');
 
@@ -196,4 +196,4 @@ const AdminPage = () => {
   );
 };
 
-export default AdminPage;
+export default RootPage;
