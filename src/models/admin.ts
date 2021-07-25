@@ -1,11 +1,15 @@
 import { Reducer, Effect } from 'umi';
-import * as loginService from '@/services/login';
+import * as adminService from '@/services/admin';
 
-export interface AdminModelState {
-  token: string;
-  isLogin: boolean;
+export interface AdminListItem {
   adminId: string;
   adminType: string;
+  createTime: Date;
+  deleteMark: boolean;
+}
+
+export interface AdminModelState {
+  adminList: AdminListItem[];
 }
 
 export interface AdminModelType {
@@ -15,19 +19,17 @@ export interface AdminModelType {
     save: Reducer;
   };
   effects: {
-    login: Effect;
-    logout: Effect;
+    getAdminList: Effect;
+    // updateAdmin: Effect;
+    // deleteAdmin: Effect;
   };
 }
 
 const initState: AdminModelState = {
-  token: '',
-  isLogin: false,
-  adminId: '',
-  adminType: '2',
+  adminList: [],
 };
 
-const authModel: AdminModelType = {
+const adminModel: AdminModelType = {
   namespace: 'admin',
   state: initState,
   reducers: {
@@ -39,33 +41,18 @@ const authModel: AdminModelType = {
     },
   },
   effects: {
-    *login({ payload = {}, onSuccess, onError }, { call, put }) {
-      try {
-        const res = yield call(loginService.login, { params: payload });
-        console.log('登录请求返回数据: ');
-        console.log(res);
-        yield put({
-          type: 'save',
-          payload: {
-            token: res.token,
-            isLogin: true,
-            adminId: payload.adminId,
-            adminType: res.adminType,
-          },
-        });
-        onSuccess(res);
-      } catch (err) {
-        onError(err);
-      }
-    },
-    *logout({ onSuccess }, { put }) {
+    *getAdminList({ payload = {} }, { call, put }) {
+      const res = yield call(adminService.getAdminList, { params: payload });
+      console.log('登录请求返回数据: ');
+      console.log(res);
       yield put({
         type: 'save',
-        payload: initState,
+        payload: {
+          adminList: res.data,
+        },
       });
-      onSuccess();
     },
   },
 };
 
-export default authModel;
+export default adminModel;

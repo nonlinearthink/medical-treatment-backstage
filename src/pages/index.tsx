@@ -1,19 +1,24 @@
 import ProLayout, { PageContainer } from '@ant-design/pro-layout';
 import IconFont from '@/components/iconfont';
 import { DashboardOutlined, UserOutlined } from '@ant-design/icons';
-import { Link, AdminModelState, ConnectRC, connect, history } from 'umi';
-import { Drawer, Button, message, Badge } from 'antd';
+import { Link, UserModelState, ConnectRC, connect, history } from 'umi';
+import { Drawer, Button, message, Badge, Modal, Form, Input } from 'antd';
 import React from 'react';
 import styles from './index.less';
 import Profile from '@/components/Profile';
+import { updatePassword } from '@/services/admin';
 
 interface PageProps {
-  admin: AdminModelState;
+  user: UserModelState;
 }
 
 const IndexPage: ConnectRC<PageProps> = (props) => {
   const [adminInfoVisible, setAdminInfoVisible] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
+  const [changePasswordVisable, setChangePasswordVisable] =
+    React.useState(false);
+  const [oldPassword, setOldPassword] = React.useState('');
+  const [newPassword, setNewPassword] = React.useState('');
   return (
     <ProLayout
       title="复诊配药管理系统"
@@ -53,10 +58,10 @@ const IndexPage: ConnectRC<PageProps> = (props) => {
         onClose={() => setAdminInfoVisible(false)}
         visible={adminInfoVisible}
       >
-        <Profile label="管理员:" content={props.admin.adminId} />
+        <Profile label="管理员:" content={props.user.adminId} />
         <Profile
           label="权限:"
-          content={props.admin.adminType == '1' ? '超级管理员' : '管理员'}
+          content={props.user.adminType == '1' ? '超级管理员' : '管理员'}
         />
         <Profile
           label="网络状态:"
@@ -69,6 +74,13 @@ const IndexPage: ConnectRC<PageProps> = (props) => {
           }
         />
         <Button
+          block
+          style={{ marginTop: '2rem' }}
+          onClick={() => setChangePasswordVisable(true)}
+        >
+          修改密码
+        </Button>
+        <Button
           type="primary"
           loading={loading}
           block
@@ -76,7 +88,7 @@ const IndexPage: ConnectRC<PageProps> = (props) => {
           onClick={() => {
             setLoading(true);
             props.dispatch({
-              type: 'admin/logout',
+              type: 'user/logout',
               onSuccess: () => {
                 history.push('/login');
                 message.success('登出成功');
@@ -88,10 +100,48 @@ const IndexPage: ConnectRC<PageProps> = (props) => {
           登出
         </Button>
       </Drawer>
+      <Modal
+        title="密码重置"
+        visible={changePasswordVisable}
+        onOk={() => {
+          updatePassword({ newPassword, oldPassword }).then((res) => {
+            console.log(res);
+            message.success('更新密码成功');
+            setOldPassword('');
+            setNewPassword('');
+            setChangePasswordVisable(false);
+          });
+        }}
+        onCancel={() => {
+          setChangePasswordVisable(false);
+          setOldPassword('');
+          setNewPassword('');
+        }}
+        okButtonProps={{
+          disabled: newPassword == '' || oldPassword == '',
+        }}
+      >
+        <Form.Item label="旧密码">
+          <Input.Password
+            value={oldPassword}
+            onChange={(e) => {
+              setOldPassword(e.target.value);
+            }}
+          />
+        </Form.Item>
+        <Form.Item label="新密码">
+          <Input.Password
+            value={newPassword}
+            onChange={(e) => {
+              setNewPassword(e.target.value);
+            }}
+          />
+        </Form.Item>
+      </Modal>
     </ProLayout>
   );
 };
 
-export default connect(({ admin }: { admin: AdminModelState }) => ({
-  admin,
+export default connect(({ user }: { user: UserModelState }) => ({
+  user,
 }))(IndexPage);

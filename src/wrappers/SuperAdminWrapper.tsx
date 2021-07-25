@@ -1,11 +1,11 @@
-import { connect, AdminModelState, ConnectRC, history } from 'umi';
+import { connect, UserModelState, ConnectRC, history } from 'umi';
 
 interface WrapperProps {
-  admin: AdminModelState;
+  user: UserModelState;
 }
 
-const SuperAdminWrapper: ConnectRC<WrapperProps> = ({ admin, children }) => {
-  if (admin.adminType == '1') {
+const SuperAdminWrapper: ConnectRC<WrapperProps> = ({ user, children }) => {
+  if (user.adminType == '1') {
     return <div>{children}</div>;
   } else {
     history.goBack();
@@ -13,6 +13,6 @@ const SuperAdminWrapper: ConnectRC<WrapperProps> = ({ admin, children }) => {
   }
 };
 
-export default connect(({ admin }: { admin: AdminModelState }) => ({
-  admin,
+export default connect(({ user }: { user: UserModelState }) => ({
+  user,
 }))(SuperAdminWrapper);

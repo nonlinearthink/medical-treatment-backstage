@@ -1,17 +1,17 @@
-import { Redirect, connect, AdminModelState, ConnectRC } from 'umi';
+import { Redirect, connect, UserModelState, ConnectRC } from 'umi';
 
 interface WrapperProps {
-  admin: AdminModelState;
+  user: UserModelState;
 }
 
-const LoginWrapper: ConnectRC<WrapperProps> = ({ admin, children }) => {
-  if (admin.isLogin) {
+const LoginWrapper: ConnectRC<WrapperProps> = ({ user, children }) => {
+  if (user.isLogin) {
     return <div>{children}</div>;
   } else {
     return <Redirect to="/login" />;
   }
 };
 
-export default connect(({ admin }: { admin: AdminModelState }) => ({
-  admin,
+export default connect(({ user }: { user: UserModelState }) => ({
+  user,
 }))(LoginWrapper);

@@ -1,16 +1,16 @@
 import IconFont from '@/components/iconfont';
 import React from 'react';
 import styles from './index.less';
-import { history, AdminModelState, ConnectRC, connect } from 'umi';
+import { history, UserModelState, ConnectRC, connect } from 'umi';
 import ProForm, { ProFormText } from '@ant-design/pro-form';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { message } from 'antd';
 
 interface PageProps {
-  admin: AdminModelState;
+  user: UserModelState;
 }
 
-const LoginPage: ConnectRC<PageProps> = ({ admin, dispatch }) => {
+const LoginPage: ConnectRC<PageProps> = ({ user, dispatch }) => {
   const [loading, setLoading] = React.useState(false);
   return (
     <div className={styles.container}>
@@ -23,8 +23,8 @@ const LoginPage: ConnectRC<PageProps> = ({ admin, dispatch }) => {
           onFinish={async (values) => {
             setLoading(true);
             dispatch({
-              type: 'admin/login',
-              payload: values,
+              type: 'user/login',
+              payload: { params: values },
               onSuccess: () => {
                 history.push('/welcome');
                 message.success('登录成功');
@@ -87,6 +87,6 @@ const LoginPage: ConnectRC<PageProps> = ({ admin, dispatch }) => {
   );
 };
 
-export default connect(({ admin }: { admin: AdminModelState }) => ({
-  admin,
+export default connect(({ user }: { user: UserModelState }) => ({
+  user,
 }))(LoginPage);
