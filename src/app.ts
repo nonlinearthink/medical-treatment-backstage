@@ -28,7 +28,8 @@ export const dva = {
 };
 
 export const request: RequestConfig = {
-  prefix: 'https://www.piduoduo.xyz',
+  // prefix: 'https://www.piduoduo.xyz',
+  prefix: 'http://localhost:9000',
   requestInterceptors: [
     (url, options) => {
       let store = getDvaApp()._store.getState();

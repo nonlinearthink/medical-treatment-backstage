@@ -25,6 +25,16 @@ export default defineConfig({
           exact: true,
           wrappers: ['@/wrappers/SuperAdminWrapper'],
         },
+        {
+          path: '/org',
+          component: '@/pages/OrgPage',
+        },
+        {
+          path: '/org/dept',
+          component: '@/pages/DeptPage',
+          exact: true,
+          name: '科室',
+        },
         { path: '/drug', component: '@/pages/DrugPage', exact: true },
       ],
     },

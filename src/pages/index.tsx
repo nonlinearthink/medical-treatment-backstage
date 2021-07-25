@@ -1,6 +1,10 @@
 import ProLayout, { PageContainer } from '@ant-design/pro-layout';
 import IconFont from '@/components/iconfont';
-import { DashboardOutlined, UserOutlined } from '@ant-design/icons';
+import {
+  DashboardOutlined,
+  UserOutlined,
+  DeploymentUnitOutlined,
+} from '@ant-design/icons';
 import { Link, UserModelState, ConnectRC, connect, history } from 'umi';
 import { Drawer, Button, message, Badge, Modal, Form, Input } from 'antd';
 import React from 'react';
@@ -26,6 +30,11 @@ const IndexPage: ConnectRC<PageProps> = (props) => {
       menuDataRender={() => [
         { path: '/admin/welcome', name: '欢迎', icon: <DashboardOutlined /> },
         { path: '/admin/root', name: '管理员管理', icon: <UserOutlined /> },
+        {
+          path: '/admin/org',
+          name: '机构与科室管理',
+          icon: <DeploymentUnitOutlined />,
+        },
       ]}
       menuItemRender={(item, dom) => {
         let path = item.path?.replace('/admin', '');
