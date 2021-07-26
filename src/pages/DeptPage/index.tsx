@@ -41,7 +41,14 @@ const DeptPage: React.FC = (props: any) => {
         pagination={{
           pageSize: 12,
         }}
-        request={getDeptList}
+        request={({ pageSize, current }) => {
+          let res = getDeptList({
+            pageSize: pageSize ? pageSize : 12,
+            current: current ? current : 1,
+            orgId: props.location.query.orgId,
+          });
+          return res;
+        }}
         options={{ density: false, fullScreen: true, setting: false }}
         metas={{
           title: { dataIndex: 'deptName', title: '机构名' },

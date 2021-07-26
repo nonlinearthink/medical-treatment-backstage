@@ -41,6 +41,7 @@ const userModel: UserModelType = {
   effects: {
     *login({ payload = {}, onSuccess, onError }, { call, put }) {
       try {
+        console.log(payload);
         const res = yield call(loginService.login, payload);
         console.log('登录请求返回数据: ');
         console.log(res);
@@ -49,7 +50,7 @@ const userModel: UserModelType = {
           payload: {
             token: res.token,
             isLogin: true,
-            adminId: payload.adminId,
+            adminId: payload.params.adminId,
             adminType: res.adminType,
           },
         });

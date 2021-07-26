@@ -1,19 +1,27 @@
-import { useSelector } from '@/.umi/plugin-dva/exports';
 import React from 'react';
-import { AdminModelState, Loading, connect, ConnectRC, history } from 'umi';
+import { UserModelState, Loading, connect, ConnectRC, history } from 'umi';
+import ProCard from '@ant-design/pro-card';
 
 interface PageProps {
-  admin: AdminModelState;
-  loading: boolean;
+  user: UserModelState;
 }
 
-const WelcomePage: ConnectRC<PageProps> = ({ admin }) => {
-  return <div>ok</div>;
+const WelcomePage: ConnectRC<PageProps> = ({ user }) => {
+  return (
+    <div>
+      <ProCard
+        title="复诊配药管理系统"
+        subTitle="V0.4.0"
+        bordered
+        headerBordered
+      ></ProCard>
+    </div>
+  );
 };
 
 export default connect(
-  ({ admin, loading }: { admin: AdminModelState; loading: Loading }) => ({
-    admin,
+  ({ user, loading }: { user: UserModelState; loading: Loading }) => ({
+    user,
     loading: loading.models.admin,
   }),
 )(WelcomePage);

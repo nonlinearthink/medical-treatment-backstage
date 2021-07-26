@@ -37,6 +37,17 @@ export default defineConfig({
         },
         { path: '/diagnosis', component: '@/pages/DiagnosisPage', exact: true },
         { path: '/drug', component: '@/pages/DrugPage', exact: true },
+        { path: '/doctor', component: '@/pages/DoctorPage', exact: true },
+        {
+          path: '/doctor/new',
+          component: '@/pages/CreateDoctorPage',
+          exact: true,
+        },
+        {
+          path: '/doctor/edit',
+          component: '@/pages/EditDoctorPage',
+          exact: true,
+        },
       ],
     },
   ],

@@ -45,6 +45,5 @@ interface CreateDiagnosisProps {
 }
 
 export function createDiagnosis(props: CreateDiagnosisProps) {
-  console.log(props);
   return request(`/api/diagnosis`, { method: 'POST', data: props });
 }

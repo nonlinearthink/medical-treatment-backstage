@@ -1,6 +1,7 @@
 import { request } from 'umi';
 
 interface GetDeptListProps {
+  orgId: number;
   pageSize: number;
   current: number;
 }
@@ -8,7 +9,11 @@ interface GetDeptListProps {
 export function getDeptList(props: GetDeptListProps) {
   return request(`/api/dept/v2`, {
     method: 'GET',
-    params: { number: props.current, size: props.pageSize },
+    params: {
+      number: props.current,
+      size: props.pageSize,
+      orgId: props.orgId,
+    },
   });
 }
 
