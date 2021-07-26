@@ -3,7 +3,13 @@
 import { SVGAttributes, FunctionComponent } from 'react';
 
 interface Props extends Omit<SVGAttributes<SVGElement>, 'color'> {
-  name: 'yiyuan' | 'S_anyiyuanguahao' | 'yonghu' | 'yiliaoxiaofeixinxichaxun';
+  name:
+    | 'APIwangguan'
+    | 'gitee-fill-round'
+    | 'yiyuan'
+    | 'S_anyiyuanguahao'
+    | 'yonghu'
+    | 'yiliaoxiaofeixinxichaxun';
   size?: number;
   color?: string | string[];
 }
